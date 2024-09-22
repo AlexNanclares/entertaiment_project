@@ -4,10 +4,9 @@ import com.example.streamingPlatform.persistence.entity.Entertainment;
 import com.example.streamingPlatform.service.EntertainmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/entertainment")
@@ -19,5 +18,10 @@ public class EntertainmentController {
     @GetMapping("/random")
     public ResponseEntity<Entertainment> getRandomEntertaiment(){
         return ResponseEntity.ok(entertainmentService.getRandomEntertaiment());
+    }
+
+    @GetMapping("/order")
+    public ResponseEntity<List<Entertainment>> getEntertaimentByOrder(@RequestParam String typeOrder){
+        return ResponseEntity.ok(entertainmentService.getEntertaimentByOrder(typeOrder));
     }
 }
