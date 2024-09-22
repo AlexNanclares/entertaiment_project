@@ -24,4 +24,9 @@ public class EntertainmentController {
     public ResponseEntity<List<Entertainment>> getEntertaimentByOrder(@RequestParam String typeOrder){
         return ResponseEntity.ok(entertainmentService.getEntertaimentByOrder(typeOrder));
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Entertainment>> getEntertaimentByFilter(@RequestParam String typeFilter, @RequestParam String filterValue){
+        return ResponseEntity.ok(entertainmentService.getEntertaimentByFilter(typeFilter, filterValue));
+    }
 }

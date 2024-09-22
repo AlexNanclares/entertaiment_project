@@ -36,4 +36,19 @@ public class EntertainmentServiceImpl implements EntertainmentService {
 
         return  result;
     }
+
+    @Override
+    public List<Entertainment> getEntertaimentByFilter(String typeFilter, String filterValue) {
+        List<Entertainment> result = new ArrayList<>();
+
+        if(typeFilter.equals("nombre")){
+            result = entertaimentRepository.getEntertaimentsFilterByName(filterValue);
+        }else if(typeFilter.equals("tipo")){
+            result = entertaimentRepository.getEntertaimentsFilterByType(filterValue);
+        } else if(typeFilter.equals("genero")){
+            result = entertaimentRepository.getEntertaimentsFilterByGender(filterValue);
+        }
+
+        return result;
+    }
 }
