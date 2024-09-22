@@ -23,6 +23,7 @@ public class Entertainment {
     private String name;
     @Column(nullable = false, length = 20)
     private String gender;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TypeEntertaiment type;
     @Column(nullable = false, name = "number_views")
