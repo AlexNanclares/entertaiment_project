@@ -21,7 +21,7 @@ public class Entertainment {
     private Integer id;
     @Column(nullable = false, length = 80)
     private String name;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 100)
     private String gender;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
