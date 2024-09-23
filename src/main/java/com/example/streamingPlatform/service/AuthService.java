@@ -3,6 +3,7 @@ package com.example.streamingPlatform.service;
 import com.example.streamingPlatform.DTO.AuthResponse;
 import com.example.streamingPlatform.DTO.UserInLoginDTO;
 import com.example.streamingPlatform.DTO.UserInRegisterDTO;
+import com.example.streamingPlatform.exceptions.BadRequestException;
 import com.example.streamingPlatform.jwt.JwtService;
 import com.example.streamingPlatform.persistence.entity.User;
 import com.example.streamingPlatform.persistence.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+
+import static com.example.streamingPlatform.util.Utilities.buildClaimsUser;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +30,18 @@ public class AuthService {
     public AuthResponse login(UserInLoginDTO user) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
-        UserDetails userDetail = userRepository.findByUsername(user.getUsername()).orElseThrow();
-        String token = jwtService.getToken(userDetail);
+        User userDetail = userRepository.findByUsername(user.getUsername()).orElseThrow();
+        String token = jwtService.getToken(userDetail, buildClaimsUser(userDetail));
 
-        AuthResponse resultado = new AuthResponse();
-        resultado.setToken(token);
-
-        return resultado;
+        return new AuthResponse(token);
     }
 
     public AuthResponse register(UserInRegisterDTO userDTO) {
+
+        if(!userRepository.findByUsername(userDTO.getUsername()).isEmpty()){
+            throw new BadRequestException("Ya existe un usuario con el username ::: " + userDTO.getUsername() + ". Por favor intenta con otro.");
+        }
+
         User user = new User();
 
         user.setUsername(userDTO.getUsername());
@@ -47,9 +52,8 @@ public class AuthService {
 
         userRepository.save(user);
 
-        AuthResponse resultado = new AuthResponse();
-        resultado.setToken(jwtService.getToken(user));
+        String token = jwtService.getToken(user, buildClaimsUser(user));
 
-        return resultado;
+        return new AuthResponse(token);
     }
 }
