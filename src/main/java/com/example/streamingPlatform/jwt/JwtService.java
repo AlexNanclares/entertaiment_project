@@ -20,8 +20,8 @@ public class JwtService {
 
     private static final String SECRET_KEY = "5AMC5FUFS0ERC8A547UU5VTF2P92EZ27ZP12VRL1H913QLKE41";
 
-    public String getToken(UserDetails user) {
-        return getToken(new HashMap<>(), user);
+    public String getToken(UserDetails user, Map<String,Object> extraClaims) {
+        return getToken(extraClaims, user);
     }
 
     private String getToken(Map<String,Object> extraClaims, UserDetails user) {
@@ -41,6 +41,11 @@ public class JwtService {
 
     public String getUsernameFromToken(String token) {
         return getClaim(token, Claims::getSubject);
+    }
+
+    public Integer getIdUserFromToken(String token) {
+        Claims claims = getAllClaims(token);
+        return claims.get("id", Integer.class);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
