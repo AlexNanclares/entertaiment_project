@@ -8,7 +8,10 @@ import com.example.streamingPlatform.service.AuthService;
 import com.example.streamingPlatform.util.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -17,7 +20,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody UserInLoginDTO user){
 
         if(Utilities.isNullOrEmpty(user.getUsername()) || Utilities.isNullOrEmpty(user.getPassword())){
@@ -27,7 +30,7 @@ public class AuthController {
        return ResponseEntity.ok(authService.login(user));
    }
 
-    @RequestMapping(value = "/register", method = { RequestMethod.GET, RequestMethod.POST })
+   @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody UserInRegisterDTO user){
        if(Utilities.isNullOrEmpty(user.getUsername()) || Utilities.isNullOrEmpty(user.getPassword())
                || Utilities.isNullOrEmpty(user.getFirstName()) || Utilities.isNullOrEmpty(user.getLastName())){
