@@ -22,7 +22,7 @@ public class RatingEntertainmentController {
 
         String entertaiment = (String) params.get("entertaiment");
 
-        if(entertaiment == null || entertaiment.equals("")){
+        if(Utilities.isNullOrEmpty(entertaiment)){
             return new ResponseEntity<>(new GenericResponse(400, "La serie/pelicula es requerida.", ""), HttpStatus.BAD_REQUEST);
         }
 
@@ -47,6 +47,6 @@ public class RatingEntertainmentController {
 
         ratingEntertainmentService.updatePunctuationByUser(entertaiment, punctuation, token.substring(7));
 
-        return ResponseEntity.ok(new GenericResponse(200, "Se ha actualizado la visualización.", ""));
+        return ResponseEntity.ok(new GenericResponse(200, "Se ha actualizado la puntuación.", ""));
     }
 }
