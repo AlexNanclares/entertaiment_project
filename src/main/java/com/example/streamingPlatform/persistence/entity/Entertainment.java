@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -33,4 +35,7 @@ public class Entertainment {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+
+    @OneToMany(mappedBy = "entertainment")
+    private Set<RatingEntertainment> ratingEntertainment = new HashSet<>();
 }
