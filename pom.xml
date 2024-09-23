@@ -102,17 +102,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version> <!-- puedes usar la versión más reciente -->
-				<executions>
-					<execution>
-						<id>default-jar</id>
-						<phase>none</phase> <!-- Esto deshabilita la creación del JAR -->
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
